@@ -110,7 +110,7 @@ export default function D1RelocationLookup() {
       console.log('API Key configured:', apiKey ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}` : 'NOT SET');
 
       const response = await fetch(
-        'https://cqvgadrdfrjekcgpwfyx.supabase.co/functions/v1/get-order-details',
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-order-details`,
         {
           method: 'POST',
           headers: {
