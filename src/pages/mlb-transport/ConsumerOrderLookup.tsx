@@ -101,10 +101,10 @@ export default function ConsumerOrderLookup() {
     setOrderData(null);
 
     try {
-      const apiKey = import.meta.env.VITE_D1_API_KEY;
+      const apiKey = import.meta.env.VITE_CONSUMER_API_KEY;
 
-      if (!apiKey || apiKey === 'your_d1_api_key_here') {
-        throw new Error('API key not configured. Please set VITE_D1_API_KEY in your .env file.');
+      if (!apiKey || apiKey === 'your_consumer_api_key_here') {
+        throw new Error('API key not configured. Please set VITE_CONSUMER_API_KEY in your .env file.');
       }
 
       console.log('Making API request with order number:', orderNumber);
