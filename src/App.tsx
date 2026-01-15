@@ -15,6 +15,7 @@ import Carriers from './pages/carriers/Carriers';
 import MLBTransport from './pages/mlb-transport/MLBTransport';
 import MLBOrderLookup from './pages/mlb-transport/MLBOrderLookup';
 import D1RelocationLookup from './pages/mlb-transport/D1RelocationLookup';
+import ConsumerOrderLookup from './pages/mlb-transport/ConsumerOrderLookup';
 import Referrals from './pages/referrals/Referrals';
 import Vendors from './pages/vendors/Vendors';
 import Reports from './pages/reports/Reports';
@@ -51,6 +52,7 @@ function App() {
             <Route path="mlb-transport" element={<MLBTransport />} />
             <Route path="mlb-transport/order-lookup" element={<MLBOrderLookup />} />
             <Route path="d1-relocation/order-lookup" element={<D1RelocationLookup />} />
+            <Route path="d1-relocation/consumer-lookup" element={<ConsumerOrderLookup />} />
             <Route path="referrals" element={<Referrals />} />
             <Route path="vendors" element={<Vendors />} />
             <Route path="reports" element={<Reports />} />
