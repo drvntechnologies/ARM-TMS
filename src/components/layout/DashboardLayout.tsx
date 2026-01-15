@@ -47,6 +47,7 @@ const menuItems: MenuItem[] = [
       { name: 'MLB Order Lookup', path: '/dashboard/mlb-transport/order-lookup', icon: <Search className="w-4 h-4" /> },
     ]
   },
+  { name: 'D1 Relocation Lookup', path: '/dashboard/d1-relocation/order-lookup', icon: <Search className="w-5 h-5" /> },
   { name: 'Referral Management', path: '/dashboard/referrals', icon: <Gift className="w-5 h-5" /> },
   { name: 'Vendors', path: '/dashboard/vendors', icon: <Package className="w-5 h-5" /> },
   { name: 'Reports', path: '/dashboard/reports', icon: <BarChart3 className="w-5 h-5" /> },
