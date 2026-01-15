@@ -115,6 +115,7 @@ export default function ConsumerOrderLookup() {
         {
           method: 'POST',
           headers: {
+            'Authorization': `Bearer ${apiKey}`,
             'X-API-Key': apiKey,
             'Content-Type': 'application/json',
           },
