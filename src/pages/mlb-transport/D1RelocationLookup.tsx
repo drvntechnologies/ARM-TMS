@@ -101,9 +101,14 @@ export default function D1RelocationLookup() {
 
     try {
       const apiKey = import.meta.env.VITE_D1_API_KEY;
+      const supabaseAnonKey = import.meta.env.VITE_D1_SUPABASE_ANON_KEY;
 
       if (!apiKey || apiKey === 'your_d1_api_key_here') {
         throw new Error('API key not configured. Please set VITE_D1_API_KEY in your .env file.');
+      }
+
+      if (!supabaseAnonKey) {
+        throw new Error('Supabase anon key not configured. Please set VITE_D1_SUPABASE_ANON_KEY in your .env file.');
       }
 
       console.log('Making API request with order number:', orderNumber);
@@ -115,6 +120,7 @@ export default function D1RelocationLookup() {
           method: 'POST',
           headers: {
             'X-API-Key': apiKey,
+            'Authorization': `Bearer ${supabaseAnonKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ order_number: orderNumber }),
