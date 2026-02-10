@@ -110,7 +110,7 @@ export default function D1RelocationLookup() {
       console.log('API Key configured:', apiKey ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}` : 'NOT SET');
 
       const response = await fetch(
-        'https://cqvgadrdfrjekcgpwfyx.supabase.co/functions/v1/get-order-details',
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-order-details`,
         {
           method: 'POST',
           headers: {
@@ -151,14 +151,6 @@ export default function D1RelocationLookup() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">D1 Relocation Lookup</h1>
         <p className="text-gray-600 mt-1">Search for order details by order number</p>
-      </div>
-
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-start gap-3">
-        <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-        <div>
-          <p className="font-semibold text-yellow-900">Under Development</p>
-          <p className="text-sm text-yellow-800">This feature is still in progress and is not operational at this time.</p>
-        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
