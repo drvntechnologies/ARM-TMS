@@ -602,7 +602,7 @@ export default function PricingTestForm({ engineId }: PricingTestFormProps) {
               </div>
               {result.d1_discount > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-600">D1 Discount:</span>
+                  <span className="text-slate-600">Discount:</span>
                   <span className="font-medium text-green-600">-${result.d1_discount.toLocaleString()}</span>
                 </div>
               )}
