@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import Button from '../../components/ui/Button';
+import PricingTestForm from '../../components/pricing/PricingTestForm';
 
 interface EngineRules {
   margin_divisor: number;
@@ -38,7 +39,7 @@ export default function EngineEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [engineName, setEngineName] = useState('');
-  const [activeTab, setActiveTab] = useState<'rules' | 'surcharges'>('rules');
+  const [activeTab, setActiveTab] = useState<'rules' | 'surcharges' | 'testing'>('rules');
   const [rules, setRules] = useState<EngineRules>({
     margin_divisor: 0.6,
     enclosed_multiplier: 1.85,
@@ -213,6 +214,16 @@ export default function EngineEditor() {
             }`}
           >
             Seasonal Surcharges
+          </button>
+          <button
+            onClick={() => setActiveTab('testing')}
+            className={`pb-4 px-1 border-b-2 font-medium transition-colors ${
+              activeTab === 'testing'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Test Pricing
           </button>
         </nav>
       </div>
@@ -491,6 +502,10 @@ export default function EngineEditor() {
             </Button>
           </div>
         </div>
+      )}
+
+      {activeTab === 'testing' && engineId && (
+        <PricingTestForm engineId={engineId} />
       )}
     </div>
   );
