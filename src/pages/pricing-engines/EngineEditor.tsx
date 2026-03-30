@@ -311,13 +311,51 @@ export default function EngineEditor() {
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">
-                Discount (%)
+                D1 Discount (%)
               </label>
               <input
                 type="number"
                 step="0.1"
                 value={rules.d1_discount_percent}
                 onChange={(e) => setRules({ ...rules, d1_discount_percent: parseFloat(e.target.value) })}
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                FVP Base (%)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                value={rules.fvp_base_percent}
+                onChange={(e) => setRules({ ...rules, fvp_base_percent: parseFloat(e.target.value) })}
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <p className="text-xs text-slate-500 mt-1">Percentage of vehicle value</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                FVP $500 Deductible Fee ($)
+              </label>
+              <input
+                type="number"
+                value={rules.fvp_deductible_500_fee}
+                onChange={(e) => setRules({ ...rules, fvp_deductible_500_fee: parseFloat(e.target.value) })}
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                FVP $0 Deductible Fee ($)
+              </label>
+              <input
+                type="number"
+                value={rules.fvp_deductible_0_fee}
+                onChange={(e) => setRules({ ...rules, fvp_deductible_0_fee: parseFloat(e.target.value) })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
