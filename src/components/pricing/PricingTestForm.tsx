@@ -630,7 +630,7 @@ export default function PricingTestForm({ engineId }: PricingTestFormProps) {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-slate-600">Confidence:</span>
-                <span className="font-medium">{Math.round(result.confidence_score * 100)}%</span>
+                <span className="font-medium">{Math.round(result.confidence_score)}%</span>
               </div>
             </div>
           </div>
