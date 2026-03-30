@@ -63,11 +63,17 @@ export async function getCarrierRate(request: SuperDispatchRequest): Promise<Sup
   }
 }
 
-function getMockCarrierRate(request: SuperDispatchRequest): SuperDispatchResponse {
-  const originCoords = getZipCoordinates(request.origin.zip, request.origin.state);
-  const destCoords = getZipCoordinates(request.destination.zip, request.destination.state);
+async function getMockCarrierRate(request: SuperDispatchRequest): Promise<SuperDispatchResponse> {
+  let distance: number;
 
-  const distance = calculateDistance(originCoords, destCoords);
+  try {
+    distance = await calculateDistanceWithGoogle(request.origin.zip, request.destination.zip);
+  } catch (error) {
+    console.warn('Google Maps API error, using fallback calculation:', error);
+    const originCoords = getZipCoordinates(request.origin.zip, request.origin.state);
+    const destCoords = getZipCoordinates(request.destination.zip, request.destination.state);
+    distance = calculateDistance(originCoords, destCoords);
+  }
 
   const baseRate = 300;
   const perMileRate = 0.58;
@@ -91,6 +97,43 @@ function getMockCarrierRate(request: SuperDispatchRequest): SuperDispatchRespons
     estimated_days: Math.max(1, Math.ceil(distance / 450)),
     confidence: 75,
   };
+}
+
+async function calculateDistanceWithGoogle(originZip: string, destinationZip: string): Promise<number> {
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('Google Maps API key not configured');
+  }
+
+  const url = new URL('https://maps.googleapis.com/maps/api/distancematrix/json');
+  url.searchParams.append('origins', originZip);
+  url.searchParams.append('destinations', destinationZip);
+  url.searchParams.append('units', 'imperial');
+  url.searchParams.append('key', apiKey);
+
+  const response = await fetch(url.toString());
+
+  if (!response.ok) {
+    throw new Error(`Google Maps API error: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+
+  if (data.status !== 'OK') {
+    throw new Error(`Google Maps API status: ${data.status}`);
+  }
+
+  const element = data.rows[0]?.elements[0];
+
+  if (!element || element.status !== 'OK') {
+    throw new Error('Unable to calculate distance');
+  }
+
+  const distanceInMeters = element.distance.value;
+  const distanceInMiles = distanceInMeters * 0.000621371;
+
+  return distanceInMiles;
 }
 
 function calculateDistance(coords1: { lat: number; lon: number }, coords2: { lat: number; lon: number }): number {
