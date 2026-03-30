@@ -3,6 +3,7 @@ import { Beaker, Plus, Trash2, Save, Play, Copy } from 'lucide-react';
 import { calculatePrice, VehicleDetails, PricingBreakdown } from '../../services/pricingEngine';
 import { supabase } from '../../lib/supabase';
 import Button from '../ui/Button';
+import { getYears, getMakes, getModelsByMake, getCategoryByMakeModel } from '../../utils/vehicleData';
 
 interface PricingTestFormProps {
   engineId: string;
@@ -101,6 +102,25 @@ export default function PricingTestForm({ engineId }: PricingTestFormProps) {
   const updateVehicle = (index: number, field: keyof TestVehicle, value: any) => {
     const updated = [...testData.vehicles];
     updated[index] = { ...updated[index], [field]: value };
+
+    // Auto-update type when make/model changes
+    if (field === 'make') {
+      updated[index].model = '';
+      updated[index].type = 'sedan';
+    } else if (field === 'model') {
+      const category = getCategoryByMakeModel(updated[index].make, value);
+      if (category) {
+        const typeMap: { [key: string]: string } = {
+          'Sedan': 'sedan',
+          'SUV': 'suv',
+          'Pickup Truck': 'pickup',
+          'Van': 'van',
+          'Mini-Van': 'van',
+        };
+        updated[index].type = typeMap[category] || 'sedan';
+      }
+    }
+
     setTestData({ ...testData, vehicles: updated });
   };
 
@@ -394,35 +414,45 @@ export default function PricingTestForm({ engineId }: PricingTestFormProps) {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-slate-600 mb-1">Year</label>
-                    <input
-                      type="text"
+                    <select
                       value={vehicle.year}
                       onChange={(e) => updateVehicle(index, 'year', e.target.value)}
                       className="w-full px-2 py-1.5 text-sm border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="2020"
-                    />
+                    >
+                      <option value="">Select Year</option>
+                      {getYears().map(year => (
+                        <option key={year} value={year}>{year}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div>
                     <label className="block text-xs font-medium text-slate-600 mb-1">Make</label>
-                    <input
-                      type="text"
+                    <select
                       value={vehicle.make}
                       onChange={(e) => updateVehicle(index, 'make', e.target.value)}
                       className="w-full px-2 py-1.5 text-sm border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Toyota"
-                    />
+                    >
+                      <option value="">Select Make</option>
+                      {getMakes().map(make => (
+                        <option key={make} value={make}>{make}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="col-span-2">
                     <label className="block text-xs font-medium text-slate-600 mb-1">Model</label>
-                    <input
-                      type="text"
+                    <select
                       value={vehicle.model}
                       onChange={(e) => updateVehicle(index, 'model', e.target.value)}
                       className="w-full px-2 py-1.5 text-sm border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Camry"
-                    />
+                      disabled={!vehicle.make}
+                    >
+                      <option value="">Select Model</option>
+                      {vehicle.make && getModelsByMake(vehicle.make).map(model => (
+                        <option key={model} value={model}>{model}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div>
