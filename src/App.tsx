@@ -25,6 +25,10 @@ import Users from './pages/users/Users';
 import Roles from './pages/roles/Roles';
 import ACL from './pages/acl/ACL';
 import Profile from './pages/profile/Profile';
+import PricingEngines from './pages/pricing-engines/PricingEngines';
+import EngineEditor from './pages/pricing-engines/EngineEditor';
+import APIKeys from './pages/api-keys/APIKeys';
+import PricingAnalytics from './pages/pricing-analytics/PricingAnalytics';
 
 function App() {
   return (
@@ -62,6 +66,10 @@ function App() {
             <Route path="roles" element={<Roles />} />
             <Route path="acl" element={<ACL />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="pricing-engines" element={<PricingEngines />} />
+            <Route path="pricing-engines/:engineId" element={<EngineEditor />} />
+            <Route path="api-keys" element={<APIKeys />} />
+            <Route path="pricing-analytics" element={<PricingAnalytics />} />
           </Route>
 
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

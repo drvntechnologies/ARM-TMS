@@ -1,27 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import {
-  Menu,
-  X,
-  FileText,
-  FileCheck,
-  Users,
-  Truck,
-  Gift,
-  Package,
-  BarChart3,
-  Settings,
-  UserCircle,
-  Shield,
-  Lock,
-  LogOut,
-  ChevronDown,
-  ChevronRight,
-  TruckIcon,
-  Key,
-  Search,
-} from 'lucide-react';
+import { Menu, X, FileText, FileCheck, Users, Truck, Gift, Package, BarChart3, Settings, CircleUser as UserCircle, Shield, Lock, LogOut, ChevronDown, ChevronRight, Truck as TruckIcon, Key, Search, Calculator, Database } from 'lucide-react';
 
 interface MenuItem {
   name: string;
@@ -59,6 +39,9 @@ const menuItems: MenuItem[] = [
   { name: 'Vendors', path: '/dashboard/vendors', icon: <Package className="w-5 h-5" /> },
   { name: 'Reports', path: '/dashboard/reports', icon: <BarChart3 className="w-5 h-5" /> },
   { name: 'API Access', path: '/dashboard/api-access', icon: <Key className="w-5 h-5" /> },
+  { name: 'Pricing Engines', path: '/dashboard/pricing-engines', icon: <Calculator className="w-5 h-5" /> },
+  { name: 'API Keys', path: '/dashboard/api-keys', icon: <Key className="w-5 h-5" /> },
+  { name: 'Pricing Analytics', path: '/dashboard/pricing-analytics', icon: <Database className="w-5 h-5" /> },
   { name: 'Settings', path: '/dashboard/settings', icon: <Settings className="w-5 h-5" /> },
   { name: 'User Management', path: '/dashboard/users', icon: <UserCircle className="w-5 h-5" /> },
   { name: 'User Roles', path: '/dashboard/roles', icon: <Shield className="w-5 h-5" /> },
