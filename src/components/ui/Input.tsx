@@ -1,29 +1,35 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { forwardRef } from 'react';
+import FormField from '@cloudscape-design/components/form-field';
+import CloudscapeInput from '@cloudscape-design/components/input';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps {
   label?: string;
   error?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  type?: string;
+  required?: boolean;
+  disabled?: boolean;
+  className?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className = '', ...props }, ref) => {
+  ({ label, error, value = '', onChange, type = 'text', required, disabled, placeholder, className = '' }, ref) => {
     return (
-      <div className="w-full">
-        {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
-          </label>
-        )}
-        <input
-          ref={ref}
-          className={`w-full px-4 py-2 border ${
-            error ? 'border-red-500' : 'border-gray-300'
-          } rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className}`}
-          {...props}
+      <FormField
+        label={label}
+        errorText={error}
+      >
+        <CloudscapeInput
+          value={value}
+          onChange={({ detail }) => onChange?.(detail.value)}
+          type={type}
+          placeholder={placeholder}
+          disabled={disabled}
+          inputMode={type === 'number' ? 'numeric' : undefined}
         />
-        {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
-      </div>
+      </FormField>
     );
   }
 );
