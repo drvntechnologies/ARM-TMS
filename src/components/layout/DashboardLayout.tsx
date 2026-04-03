@@ -20,6 +20,7 @@ export default function DashboardLayout() {
   const navItems = [
     { type: 'link', text: 'Quotes', href: '/dashboard/quotes' },
     { type: 'link', text: 'Customer Quotes', href: '/dashboard/customer-quotes' },
+    { type: 'link', text: 'Orders', href: '/dashboard/orders' },
     { type: 'link', text: 'Customer Management', href: '/dashboard/customers' },
     { type: 'link', text: 'Carriers', href: '/dashboard/carriers' },
     {
