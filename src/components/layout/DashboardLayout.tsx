@@ -41,15 +41,21 @@ export default function DashboardLayout() {
     { type: 'link', text: 'Referral Management', href: '/dashboard/referrals' },
     { type: 'link', text: 'Vendors', href: '/dashboard/vendors' },
     { type: 'link', text: 'Reports', href: '/dashboard/reports' },
-    { type: 'link', text: 'API Access', href: '/dashboard/api-access' },
-    { type: 'link', text: 'Pricing Engines', href: '/dashboard/pricing-engines' },
-    { type: 'link', text: 'API Keys', href: '/dashboard/api-keys' },
-    { type: 'link', text: 'Pricing Analytics', href: '/dashboard/pricing-analytics' },
     { type: 'divider' },
-    { type: 'link', text: 'Settings', href: '/dashboard/settings' },
-    { type: 'link', text: 'User Management', href: '/dashboard/users' },
-    { type: 'link', text: 'User Roles', href: '/dashboard/roles' },
-    { type: 'link', text: 'Access Control List', href: '/dashboard/acl' },
+    {
+      type: 'section',
+      text: 'Configuration and Settings',
+      items: [
+        { type: 'link', text: 'API Access', href: '/dashboard/api-access' },
+        { type: 'link', text: 'Pricing Engines', href: '/dashboard/pricing-engines' },
+        { type: 'link', text: 'API Keys', href: '/dashboard/api-keys' },
+        { type: 'link', text: 'Pricing Analytics', href: '/dashboard/pricing-analytics' },
+        { type: 'link', text: 'Settings', href: '/dashboard/settings' },
+        { type: 'link', text: 'User Management', href: '/dashboard/users' },
+        { type: 'link', text: 'User Roles', href: '/dashboard/roles' },
+        { type: 'link', text: 'Access Control List', href: '/dashboard/acl' },
+      ]
+    },
   ];
 
   return (
