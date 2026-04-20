@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Profile } from '../../types/database';
-import { UserPlus, AlertCircle, CheckCircle, Loader, X, Mail, User, Lock, Phone } from 'lucide-react';
+import { UserPlus, AlertCircle, CheckCircle, Loader, X } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Modal from '../../components/ui/Modal';
@@ -231,10 +231,8 @@ export default function Users() {
               type="text"
               placeholder="Enter full name"
               value={newUserFullName}
-              onChange={(e) => setNewUserFullName(e.target.value)}
-              required
+              onChange={(val) => setNewUserFullName(val)}
               disabled={submitting}
-              icon={<User className="w-4 h-4" />}
             />
           </div>
 
@@ -246,10 +244,8 @@ export default function Users() {
               type="email"
               placeholder="Enter email address"
               value={newUserEmail}
-              onChange={(e) => setNewUserEmail(e.target.value)}
-              required
+              onChange={(val) => setNewUserEmail(val)}
               disabled={submitting}
-              icon={<Mail className="w-4 h-4" />}
             />
           </div>
 
@@ -261,11 +257,8 @@ export default function Users() {
               type="password"
               placeholder="Enter password (min. 6 characters)"
               value={newUserPassword}
-              onChange={(e) => setNewUserPassword(e.target.value)}
-              required
-              minLength={6}
+              onChange={(val) => setNewUserPassword(val)}
               disabled={submitting}
-              icon={<Lock className="w-4 h-4" />}
             />
           </div>
 
@@ -277,9 +270,8 @@ export default function Users() {
               type="tel"
               placeholder="Enter phone number"
               value={newUserPhone}
-              onChange={(e) => setNewUserPhone(e.target.value)}
+              onChange={(val) => setNewUserPhone(val)}
               disabled={submitting}
-              icon={<Phone className="w-4 h-4" />}
             />
           </div>
 
