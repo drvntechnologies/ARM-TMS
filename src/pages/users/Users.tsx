@@ -61,19 +61,14 @@ export default function Users() {
       if (authError) throw authError;
 
       if (authData.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: authData.user.id,
-              email: newUserEmail,
-              full_name: newUserFullName,
-              phone: newUserPhone,
-              status: 'active',
-            },
-          ]);
+        if (newUserPhone) {
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .update({ phone: newUserPhone })
+            .eq('id', authData.user.id);
 
-        if (profileError) throw profileError;
+          if (profileError) throw profileError;
+        }
 
         setSuccess(`User ${newUserFullName} created successfully`);
         setShowAddModal(false);
