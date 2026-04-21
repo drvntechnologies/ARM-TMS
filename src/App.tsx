@@ -11,6 +11,7 @@ import Quotes from './pages/quotes/Quotes';
 import NewQuote from './pages/quotes/NewQuote';
 import CustomerQuotes from './pages/quotes/CustomerQuotes';
 import Orders from './pages/orders/Orders';
+import CreateOrder from './pages/orders/CreateOrder';
 import Customers from './pages/customers/Customers';
 import Carriers from './pages/carriers/Carriers';
 import AddCarrier from './pages/carriers/AddCarrier';
@@ -54,6 +55,7 @@ function App() {
             <Route path="quotes/new" element={<NewQuote />} />
             <Route path="customer-quotes" element={<CustomerQuotes />} />
             <Route path="orders" element={<Orders />} />
+            <Route path="orders/new" element={<CreateOrder />} />
             <Route path="customers" element={<Customers />} />
             <Route path="carriers" element={<Carriers />} />
             <Route path="carriers/new" element={<AddCarrier />} />

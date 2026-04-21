@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
@@ -24,6 +25,7 @@ interface Order {
 }
 
 export default function Orders() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedItems, setSelectedItems] = useState<Order[]>([]);
@@ -134,7 +136,7 @@ export default function Orders() {
             <Button onClick={loadOrders} iconName="refresh">
               Refresh
             </Button>
-            <Button variant="primary">Create Order</Button>
+            <Button variant="primary" onClick={() => navigate('/dashboard/orders/new')}>Create Order</Button>
           </SpaceBetween>
         }
       >
@@ -155,7 +157,7 @@ export default function Orders() {
             <Box padding={{ bottom: 's' }} variant="p" color="inherit">
               No orders to display.
             </Box>
-            <Button>Create Order</Button>
+            <Button onClick={() => navigate('/dashboard/orders/new')}>Create Order</Button>
           </Box>
         }
         filter={
