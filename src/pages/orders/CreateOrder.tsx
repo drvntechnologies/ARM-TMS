@@ -157,50 +157,45 @@ export default function CreateOrder() {
     }
   };
 
-  const sel = 'w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent';
-  const lbl = 'block text-xs font-medium text-gray-700 mb-0.5';
+  const sel = 'w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent';
+  const lbl = 'block text-[11px] font-medium text-gray-700 mb-0';
   const req = <span className="text-red-500">*</span>;
-  const card = 'bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3';
+  const card = 'bg-white rounded-lg shadow-sm border border-gray-200 px-3 py-2';
 
   return (
-    <div className="space-y-2">
-      {/* Header */}
+    <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => navigate('/dashboard/orders')}
-            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             Back
           </button>
-          <div className="h-5 w-px bg-gray-300" />
-          <h1 className="text-xl font-bold text-gray-900">Create Order</h1>
+          <div className="h-4 w-px bg-gray-300" />
+          <h1 className="text-base font-bold text-gray-900">Create Order</h1>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => navigate('/dashboard/orders')}>Cancel</Button>
-          <Button
-            onClick={handleSave}
-            disabled={saving}
-            icon={saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          >
+          <Button onClick={handleSave} disabled={saving}>
             {saving ? 'Saving...' : 'Save Order'}
           </Button>
         </div>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-2 flex items-center gap-2 text-sm">
-          <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+        <div className="bg-red-50 border border-red-200 rounded px-3 py-1.5 flex items-center gap-2 text-xs">
+          <AlertCircle className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
           <span className="text-red-800">{error}</span>
         </div>
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {/* Customer Information */}
         <div className={card}>
-          <h2 className="text-sm font-semibold text-gray-900 mb-2">Customer Information</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-2">
+          <h2 className="text-xs font-semibold text-gray-900 mb-1">Customer Information</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-1">
             <div>
               <label className={lbl}>Company {req}</label>
               <select className={sel} value={form.company_name} onChange={setSelect('company_name')}>
@@ -268,19 +263,19 @@ export default function CreateOrder() {
 
         {/* Shipper Information */}
         <div className={card}>
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-sm font-semibold text-gray-900">Shipper Information</h2>
-            <label className="flex items-center gap-1.5 text-xs text-gray-600">
+          <div className="flex items-center justify-between mb-1">
+            <h2 className="text-xs font-semibold text-gray-900">Shipper Information</h2>
+            <label className="flex items-center gap-1 text-[11px] text-gray-600">
               <input
                 type="checkbox"
                 checked={shipperSame}
                 onChange={(e) => setShipperSame(e.target.checked)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3"
               />
               Same as Customer
             </label>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-1">
             <div>
               <label className={lbl}>Contact {req}</label>
               <Input
@@ -316,18 +311,18 @@ export default function CreateOrder() {
 
         {/* Vehicle Information */}
         <div className={card}>
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-sm font-semibold text-gray-900">Vehicle Information</h2>
+          <div className="flex items-center justify-between mb-1">
+            <h2 className="text-xs font-semibold text-gray-900">Vehicle Information</h2>
             <button
               onClick={addVehicle}
-              className="flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium text-xs"
+              className="flex items-center gap-0.5 text-blue-600 hover:text-blue-700 font-medium text-[11px]"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-3 h-3" />
               Add Vehicle
             </button>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {vehicles.map((vehicle, index) => (
               <VehicleCard
                 key={vehicle.id}
@@ -345,21 +340,17 @@ export default function CreateOrder() {
         </div>
 
         {/* Attachments placeholder */}
-        <div className="bg-gray-50 border border-gray-200 rounded px-4 py-3 text-xs text-gray-500">
-          <div className="flex items-center gap-1.5 mb-1">
-            <Lock className="w-3.5 h-3.5 text-gray-400" />
-            <span className="text-xs font-semibold text-gray-700">Attachments</span>
+        <div className="bg-gray-50 border border-gray-200 rounded px-3 py-2 text-[11px] text-gray-500">
+          <div className="flex items-center gap-1 mb-0.5">
+            <Lock className="w-3 h-3 text-gray-400" />
+            <span className="text-[11px] font-semibold text-gray-700">Attachments</span>
           </div>
           <p>You need to save the order before you can add any files for this page.</p>
         </div>
 
-        <div className="flex justify-end gap-2 pb-2">
+        <div className="flex justify-end gap-2 pb-1">
           <Button variant="outline" onClick={() => navigate('/dashboard/orders')}>Cancel</Button>
-          <Button
-            onClick={handleSave}
-            disabled={saving}
-            icon={saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          >
+          <Button onClick={handleSave} disabled={saving}>
             {saving ? 'Saving...' : 'Save Order'}
           </Button>
         </div>
@@ -385,16 +376,16 @@ function VehicleCard({
     onUpdate(vehicle.id, field, e.target.value);
 
   return (
-    <div className="border border-gray-200 rounded px-3 py-2">
-      <div className="flex items-center justify-between mb-1.5">
-        <h3 className="text-xs font-semibold text-gray-700">Vehicle {index + 1}</h3>
+    <div className="border border-gray-200 rounded px-2 py-1.5">
+      <div className="flex items-center justify-between mb-1">
+        <h3 className="text-[11px] font-semibold text-gray-700">Vehicle {index + 1}</h3>
         {canRemove && (
           <button onClick={() => onRemove(vehicle.id)} className="text-red-600 hover:text-red-700">
-            <Trash2 className="w-3.5 h-3.5" />
+            <Trash2 className="w-3 h-3" />
           </button>
         )}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-1.5">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-1">
         <div>
           <label className={labelClass}>VIN</label>
           <Input type="text" placeholder="VIN" value={vehicle.vin} onChange={setField('vin')} />
@@ -465,24 +456,24 @@ function VehicleCard({
           <label className={labelClass}>Note</label>
           <Input type="text" placeholder="Note" value={vehicle.note} onChange={setField('note')} />
         </div>
-        <div className="col-span-2 md:col-span-4 lg:col-span-6 flex gap-4">
-          <label className="flex items-center gap-1.5">
+        <div className="col-span-2 md:col-span-4 lg:col-span-6 flex gap-3">
+          <label className="flex items-center gap-1">
             <input
               type="checkbox"
               checked={vehicle.modified}
               onChange={(e) => onUpdate(vehicle.id, 'modified', e.target.checked)}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3"
             />
-            <span className="text-xs text-gray-700">Modified</span>
+            <span className="text-[11px] text-gray-700">Modified</span>
           </label>
-          <label className="flex items-center gap-1.5">
+          <label className="flex items-center gap-1">
             <input
               type="checkbox"
               checked={vehicle.inoperable}
               onChange={(e) => onUpdate(vehicle.id, 'inoperable', e.target.checked)}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3"
             />
-            <span className="text-xs text-gray-700">Inoperable</span>
+            <span className="text-[11px] text-gray-700">Inoperable</span>
           </label>
         </div>
       </div>

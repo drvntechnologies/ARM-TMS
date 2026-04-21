@@ -1,6 +1,4 @@
 import { forwardRef } from 'react';
-import FormField from '@cloudscape-design/components/form-field';
-import CloudscapeInput from '@cloudscape-design/components/input';
 
 interface InputProps {
   label?: string;
@@ -17,19 +15,27 @@ interface InputProps {
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, value = '', onChange, type = 'text', required, disabled, placeholder, className = '' }, ref) => {
     return (
-      <FormField
-        label={label}
-        errorText={error}
-      >
-        <CloudscapeInput
-          value={value}
-          onChange={({ detail }) => onChange?.(detail.value)}
+      <div className={className}>
+        {label && (
+          <label className="block text-[11px] font-medium text-gray-700 mb-0.5">
+            {label}
+            {required && <span className="text-red-500 ml-0.5">*</span>}
+          </label>
+        )}
+        <input
+          ref={ref}
           type={type}
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          inputMode={type === 'number' ? 'numeric' : undefined}
+          required={required}
+          className={`w-full px-2 py-1 text-xs border rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent outline-none transition-colors ${
+            error ? 'border-red-400' : 'border-gray-300'
+          } ${disabled ? 'bg-gray-50 text-gray-500' : 'bg-white'}`}
         />
-      </FormField>
+        {error && <p className="text-[10px] text-red-600 mt-0.5">{error}</p>}
+      </div>
     );
   }
 );

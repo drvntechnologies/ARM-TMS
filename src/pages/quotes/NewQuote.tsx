@@ -92,23 +92,24 @@ export default function NewQuote() {
 
   const totals = calculateTotals();
 
-  const selectClass = 'w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent';
-  const labelClass = 'block text-xs font-medium text-gray-700 mb-0.5';
-  const requiredMark = <span className="text-red-500">*</span>;
+  const sel = 'w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent';
+  const lbl = 'block text-[11px] font-medium text-gray-700 mb-0';
+  const req = <span className="text-red-500">*</span>;
+  const card = 'bg-white rounded-lg shadow-sm border border-gray-200 px-3 py-2';
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => navigate('/dashboard/quotes')}
-            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             Back
           </button>
-          <div className="h-5 w-px bg-gray-300" />
-          <h1 className="text-xl font-bold text-gray-900">Add a New Quote</h1>
+          <div className="h-4 w-px bg-gray-300" />
+          <h1 className="text-base font-bold text-gray-900">Add a New Quote</h1>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => navigate('/dashboard/quotes')}>
@@ -118,261 +119,261 @@ export default function NewQuote() {
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {/* Customer Information */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3">
-          <h2 className="text-sm font-semibold text-gray-900 mb-2">Customer Information</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-2">
+        <div className={card}>
+          <h2 className="text-xs font-semibold text-gray-900 mb-1">Customer Information</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-1">
             <div>
-              <label className={labelClass}>Company {requiredMark}</label>
-              <select className={selectClass}>
+              <label className={lbl}>Company {req}</label>
+              <select className={sel}>
                 <option value="">Select Company</option>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Company Rep {requiredMark}</label>
-              <select className={selectClass}>
+              <label className={lbl}>Company Rep {req}</label>
+              <select className={sel}>
                 <option value="">Select Company Rep</option>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Phone {requiredMark}</label>
+              <label className={lbl}>Phone {req}</label>
               <Input type="tel" placeholder="(XXX) XXX-XXXX" />
             </div>
             <div>
-              <label className={labelClass}>Email {requiredMark}</label>
+              <label className={lbl}>Email {req}</label>
               <Input type="email" placeholder="Enter Email" />
             </div>
             <div>
-              <label className={labelClass}>Referral By</label>
-              <select className={selectClass}>
+              <label className={lbl}>Referral By</label>
+              <select className={sel}>
                 <option value="">Select</option>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Assigned To {requiredMark}</label>
+              <label className={lbl}>Assigned To {req}</label>
               <Input type="text" value="Cameron Tarbell" />
             </div>
             <div>
-              <label className={labelClass}>Address 1</label>
+              <label className={lbl}>Address 1</label>
               <Input type="text" placeholder="Enter Address 1" />
             </div>
             <div>
-              <label className={labelClass}>Address 2</label>
+              <label className={lbl}>Address 2</label>
               <Input type="text" placeholder="Enter Address 2" />
             </div>
             <div>
-              <label className={labelClass}>City</label>
+              <label className={lbl}>City</label>
               <Input type="text" placeholder="Enter City" />
             </div>
             <div>
-              <label className={labelClass}>State</label>
-              <select className={selectClass}>
+              <label className={lbl}>State</label>
+              <select className={sel}>
                 <option value="">Select</option>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Zip Code</label>
+              <label className={lbl}>Zip Code</label>
               <Input type="text" placeholder="Enter Zip Code" />
             </div>
             <div>
-              <label className={labelClass}>Country</label>
+              <label className={lbl}>Country</label>
               <Input type="text" value="United States of America" />
             </div>
             <div>
-              <label className={labelClass}>Mobile</label>
+              <label className={lbl}>Mobile</label>
               <Input type="tel" placeholder="(XXX) XXX-XXXX" />
             </div>
           </div>
         </div>
 
-        {/* Origin and Destination — side by side on large screens */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+        {/* Origin and Destination */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5">
           {/* Origin */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-sm font-semibold text-gray-900">Origin</h2>
-              <label className="flex items-center gap-1.5 text-xs text-gray-600">
+          <div className={card}>
+            <div className="flex items-center justify-between mb-1">
+              <h2 className="text-xs font-semibold text-gray-900">Origin</h2>
+              <label className="flex items-center gap-1 text-[11px] text-gray-600">
                 <input
                   type="checkbox"
                   checked={originSameAsCustomer}
                   onChange={(e) => setOriginSameAsCustomer(e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3"
                 />
                 Same as Customer
               </label>
             </div>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
               <div>
-                <label className={labelClass}>First Name {requiredMark}</label>
+                <label className={lbl}>First Name {req}</label>
                 <Input type="text" placeholder="First Name" />
               </div>
               <div>
-                <label className={labelClass}>Last Name</label>
+                <label className={lbl}>Last Name</label>
                 <Input type="text" placeholder="Last Name" />
               </div>
               <div>
-                <label className={labelClass}>Phone {requiredMark}</label>
+                <label className={lbl}>Phone {req}</label>
                 <Input type="tel" placeholder="(XXX) XXX-XXXX" />
               </div>
               <div>
-                <label className={labelClass}>Email {requiredMark}</label>
+                <label className={lbl}>Email {req}</label>
                 <Input type="email" placeholder="Origin Email" />
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>Type</label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-1.5">
-                    <input type="radio" name="originType" value="residence" className="text-blue-600 focus:ring-blue-500" />
-                    <span className="text-xs text-gray-700">Residence</span>
+                <label className={lbl}>Type</label>
+                <div className="flex gap-3 mt-0.5">
+                  <label className="flex items-center gap-1">
+                    <input type="radio" name="originType" value="residence" className="text-blue-600 focus:ring-blue-500 h-3 w-3" />
+                    <span className="text-[11px] text-gray-700">Residence</span>
                   </label>
-                  <label className="flex items-center gap-1.5">
-                    <input type="radio" name="originType" value="business" className="text-blue-600 focus:ring-blue-500" />
-                    <span className="text-xs text-gray-700">Business</span>
+                  <label className="flex items-center gap-1">
+                    <input type="radio" name="originType" value="business" className="text-blue-600 focus:ring-blue-500 h-3 w-3" />
+                    <span className="text-[11px] text-gray-700">Business</span>
                   </label>
                 </div>
               </div>
               <div>
-                <label className={labelClass}>Address</label>
+                <label className={lbl}>Address</label>
                 <Input type="text" placeholder="Address" />
               </div>
               <div>
-                <label className={labelClass}>Address 2</label>
+                <label className={lbl}>Address 2</label>
                 <Input type="text" placeholder="Address 2" />
               </div>
               <div>
-                <label className={labelClass}>City {requiredMark}</label>
+                <label className={lbl}>City {req}</label>
                 <Input type="text" placeholder="City" />
               </div>
               <div>
-                <label className={labelClass}>State</label>
-                <select className={selectClass}>
+                <label className={lbl}>State</label>
+                <select className={sel}>
                   <option value="">Select</option>
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Zip Code</label>
+                <label className={lbl}>Zip Code</label>
                 <Input type="text" placeholder="Zip" />
               </div>
               <div>
-                <label className={labelClass}>Country {requiredMark}</label>
+                <label className={lbl}>Country {req}</label>
                 <Input type="text" value="United States of America" />
               </div>
               <div>
-                <label className={labelClass}>Load Spread</label>
-                <select className={selectClass}>
+                <label className={lbl}>Load Spread</label>
+                <select className={sel}>
                   <option value="">Select</option>
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Region / Province</label>
+                <label className={lbl}>Region / Province</label>
                 <Input type="text" placeholder="Region" />
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>Notes</label>
+                <label className={lbl}>Notes</label>
                 <textarea
-                  rows={2}
+                  rows={1}
                   placeholder="Enter Notes"
-                  className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>Notes from customer</label>
+                <label className={lbl}>Notes from customer</label>
                 <textarea
-                  rows={2}
+                  rows={1}
                   placeholder="Notes from customer"
-                  className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
           </div>
 
           {/* Destination */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-sm font-semibold text-gray-900">Destination</h2>
-              <label className="flex items-center gap-1.5 text-xs text-gray-600">
+          <div className={card}>
+            <div className="flex items-center justify-between mb-1">
+              <h2 className="text-xs font-semibold text-gray-900">Destination</h2>
+              <label className="flex items-center gap-1 text-[11px] text-gray-600">
                 <input
                   type="checkbox"
                   checked={destinationSameAsOrigin}
                   onChange={(e) => setDestinationSameAsOrigin(e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5"
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3"
                 />
                 Same as Origin
               </label>
             </div>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
               <div>
-                <label className={labelClass}>First Name {requiredMark}</label>
+                <label className={lbl}>First Name {req}</label>
                 <Input type="text" placeholder="First Name" />
               </div>
               <div>
-                <label className={labelClass}>Last Name</label>
+                <label className={lbl}>Last Name</label>
                 <Input type="text" placeholder="Last Name" />
               </div>
               <div>
-                <label className={labelClass}>Phone {requiredMark}</label>
+                <label className={lbl}>Phone {req}</label>
                 <Input type="tel" placeholder="(XXX) XXX-XXXX" />
               </div>
               <div>
-                <label className={labelClass}>Email</label>
+                <label className={lbl}>Email</label>
                 <Input type="email" placeholder="Primary Email" />
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>Type</label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-1.5">
-                    <input type="radio" name="destinationType" value="residence" className="text-blue-600 focus:ring-blue-500" />
-                    <span className="text-xs text-gray-700">Residence</span>
+                <label className={lbl}>Type</label>
+                <div className="flex gap-3 mt-0.5">
+                  <label className="flex items-center gap-1">
+                    <input type="radio" name="destinationType" value="residence" className="text-blue-600 focus:ring-blue-500 h-3 w-3" />
+                    <span className="text-[11px] text-gray-700">Residence</span>
                   </label>
-                  <label className="flex items-center gap-1.5">
-                    <input type="radio" name="destinationType" value="business" className="text-blue-600 focus:ring-blue-500" />
-                    <span className="text-xs text-gray-700">Business</span>
+                  <label className="flex items-center gap-1">
+                    <input type="radio" name="destinationType" value="business" className="text-blue-600 focus:ring-blue-500 h-3 w-3" />
+                    <span className="text-[11px] text-gray-700">Business</span>
                   </label>
                 </div>
               </div>
               <div>
-                <label className={labelClass}>Address</label>
+                <label className={lbl}>Address</label>
                 <Input type="text" placeholder="Address" />
               </div>
               <div>
-                <label className={labelClass}>Address 2</label>
+                <label className={lbl}>Address 2</label>
                 <Input type="text" placeholder="Address 2" />
               </div>
               <div>
-                <label className={labelClass}>City {requiredMark}</label>
+                <label className={lbl}>City {req}</label>
                 <Input type="text" placeholder="City" />
               </div>
               <div>
-                <label className={labelClass}>State</label>
-                <select className={selectClass}>
+                <label className={lbl}>State</label>
+                <select className={sel}>
                   <option value="">Select</option>
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Zip Code</label>
+                <label className={lbl}>Zip Code</label>
                 <Input type="text" placeholder="Zip" />
               </div>
               <div>
-                <label className={labelClass}>Country {requiredMark}</label>
+                <label className={lbl}>Country {req}</label>
                 <Input type="text" value="United States of America" />
               </div>
               <div>
-                <label className={labelClass}>Delivery Spread</label>
-                <select className={selectClass}>
+                <label className={lbl}>Delivery Spread</label>
+                <select className={sel}>
                   <option value="">Select</option>
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Region / Province</label>
+                <label className={lbl}>Region / Province</label>
                 <Input type="text" placeholder="Region" />
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>Notes</label>
+                <label className={lbl}>Notes</label>
                 <textarea
-                  rows={2}
+                  rows={1}
                   placeholder="Enter Notes"
-                  className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -380,61 +381,61 @@ export default function NewQuote() {
         </div>
 
         {/* Transport + Vehicle side by side */}
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-2">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3">
-            <h2 className="text-sm font-semibold text-gray-900 mb-2">Transport</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-1.5">
+          <div className={card}>
+            <h2 className="text-xs font-semibold text-gray-900 mb-1">Transport</h2>
             <div>
-              <label className={labelClass}>Trailer Type {requiredMark}</label>
-              <select className={selectClass}>
+              <label className={lbl}>Trailer Type {req}</label>
+              <select className={sel}>
                 <option value="open">Open</option>
                 <option value="enclosed">Enclosed</option>
               </select>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-sm font-semibold text-gray-900">Vehicle Information</h2>
+          <div className={card}>
+            <div className="flex items-center justify-between mb-1">
+              <h2 className="text-xs font-semibold text-gray-900">Vehicle Information</h2>
               <button
                 onClick={addVehicle}
-                className="flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium text-xs"
+                className="flex items-center gap-0.5 text-blue-600 hover:text-blue-700 font-medium text-[11px]"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-3 h-3" />
                 Add Vehicle
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {vehicles.map((vehicle, index) => (
-                <div key={vehicle.id} className="border border-gray-200 rounded px-3 py-2">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <h3 className="text-xs font-semibold text-gray-700">Vehicle {index + 1}</h3>
+                <div key={vehicle.id} className="border border-gray-200 rounded px-2 py-1.5">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-[11px] font-semibold text-gray-700">Vehicle {index + 1}</h3>
                     {vehicles.length > 1 && (
                       <button onClick={() => removeVehicle(vehicle.id)} className="text-red-600 hover:text-red-700">
-                        <Trash2 className="w-3.5 h-3.5" />
+                        <Trash2 className="w-3 h-3" />
                       </button>
                     )}
                   </div>
-                  <div className="grid grid-cols-3 md:grid-cols-6 gap-x-3 gap-y-1.5">
+                  <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 gap-y-1">
                     <div>
-                      <label className={labelClass}>VIN</label>
+                      <label className={lbl}>VIN</label>
                       <Input type="text" placeholder="VIN" />
                     </div>
                     <div>
-                      <label className={labelClass}>Year {requiredMark}</label>
+                      <label className={lbl}>Year {req}</label>
                       <Input type="text" placeholder="XXXX" />
                     </div>
                     <div>
-                      <label className={labelClass}>Make {requiredMark}</label>
+                      <label className={lbl}>Make {req}</label>
                       <Input type="text" placeholder="Make" />
                     </div>
                     <div>
-                      <label className={labelClass}>Model {requiredMark}</label>
+                      <label className={lbl}>Model {req}</label>
                       <Input type="text" placeholder="Model" />
                     </div>
                     <div>
-                      <label className={labelClass}>Type {requiredMark}</label>
-                      <select className={selectClass}>
+                      <label className={lbl}>Type {req}</label>
+                      <select className={sel}>
                         <option value="">Select</option>
                         <option value="sedan">Sedan</option>
                         <option value="suv">SUV</option>
@@ -443,17 +444,17 @@ export default function NewQuote() {
                       </select>
                     </div>
                     <div>
-                      <label className={labelClass}>Value</label>
+                      <label className={lbl}>Value</label>
                       <Input type="text" placeholder="$0.00" />
                     </div>
-                    <div className="col-span-3 md:col-span-6 flex gap-4">
-                      <label className="flex items-center gap-1.5">
-                        <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5" />
-                        <span className="text-xs text-gray-700">Modified</span>
+                    <div className="col-span-3 md:col-span-6 flex gap-3">
+                      <label className="flex items-center gap-1">
+                        <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3" />
+                        <span className="text-[11px] text-gray-700">Modified</span>
                       </label>
-                      <label className="flex items-center gap-1.5">
-                        <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5" />
-                        <span className="text-xs text-gray-700">Inoperable</span>
+                      <label className="flex items-center gap-1">
+                        <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3" />
+                        <span className="text-[11px] text-gray-700">Inoperable</span>
                       </label>
                     </div>
                   </div>
@@ -464,135 +465,135 @@ export default function NewQuote() {
         </div>
 
         {/* Quote Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3">
-          <h2 className="text-sm font-semibold text-gray-900 mb-2">Quote</h2>
+        <div className={card}>
+          <h2 className="text-xs font-semibold text-gray-900 mb-1">Quote</h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-3 gap-y-2 mb-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-2 gap-y-1 mb-2">
             <div>
-              <label className={labelClass}>Payment Option {requiredMark}</label>
-              <select className={selectClass}>
+              <label className={lbl}>Payment Option {req}</label>
+              <select className={sel}>
                 <option value="">Select</option>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Deposit Method {requiredMark}</label>
-              <select className={selectClass}>
+              <label className={lbl}>Deposit Method {req}</label>
+              <select className={sel}>
                 <option value="">Select</option>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Balance Terms {requiredMark}</label>
-              <select className={selectClass}>
+              <label className={lbl}>Balance Terms {req}</label>
+              <select className={sel}>
                 <option value="">Select</option>
               </select>
             </div>
             <div>
-              <label className={labelClass}>Line Haul {requiredMark}</label>
+              <label className={lbl}>Line Haul {req}</label>
               <Input type="text" placeholder="$0.00" />
             </div>
             <div>
-              <label className={labelClass}>Est Customer Price</label>
+              <label className={lbl}>Est Customer Price</label>
               <Input type="text" placeholder="$0.00" />
             </div>
             <div>
-              <label className={labelClass}>Est Carrier Rate</label>
+              <label className={lbl}>Est Carrier Rate</label>
               <Input type="text" placeholder="$0.00" />
             </div>
           </div>
 
-          <div className="mb-3">
-            <div className="flex items-center justify-between mb-1.5">
-              <h3 className="text-xs font-semibold text-gray-700">Accessorials</h3>
+          <div className="mb-2">
+            <div className="flex items-center justify-between mb-1">
+              <h3 className="text-[11px] font-semibold text-gray-700">Accessorials</h3>
               <button
                 onClick={addAccessorial}
-                className="flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium text-xs"
+                className="flex items-center gap-0.5 text-blue-600 hover:text-blue-700 font-medium text-[11px]"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-3 h-3" />
                 Add Accessorial
               </button>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="px-2 py-1.5 text-left text-xs font-medium text-gray-500 uppercase">Accessorial</th>
-                    <th className="px-2 py-1.5 text-left text-xs font-medium text-gray-500 uppercase">Company {requiredMark}</th>
-                    <th className="px-2 py-1.5 text-left text-xs font-medium text-gray-500 uppercase">Customer Price</th>
-                    <th className="px-2 py-1.5 text-left text-xs font-medium text-gray-500 uppercase">Vendor Price</th>
-                    <th className="px-2 py-1.5 text-left text-xs font-medium text-gray-500 uppercase">Margin</th>
-                    <th className="px-2 py-1.5 text-right text-xs font-medium text-gray-500 uppercase w-12"></th>
+                    <th className="px-2 py-1 text-left text-[10px] font-medium text-gray-500 uppercase">Accessorial</th>
+                    <th className="px-2 py-1 text-left text-[10px] font-medium text-gray-500 uppercase">Company {req}</th>
+                    <th className="px-2 py-1 text-left text-[10px] font-medium text-gray-500 uppercase">Customer Price</th>
+                    <th className="px-2 py-1 text-left text-[10px] font-medium text-gray-500 uppercase">Vendor Price</th>
+                    <th className="px-2 py-1 text-left text-[10px] font-medium text-gray-500 uppercase">Margin</th>
+                    <th className="px-2 py-1 text-right text-[10px] font-medium text-gray-500 uppercase w-8"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {accessorials.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-2 py-4 text-center text-xs text-gray-500">
+                      <td colSpan={6} className="px-2 py-3 text-center text-[11px] text-gray-500">
                         No data available in table
                       </td>
                     </tr>
                   ) : (
                     accessorials.map((accessorial) => (
                       <tr key={accessorial.id}>
-                        <td className="px-2 py-1">
+                        <td className="px-1 py-0.5">
                           <Input type="text" placeholder="Item" />
                         </td>
-                        <td className="px-2 py-1">
-                          <select className={selectClass}>
+                        <td className="px-1 py-0.5">
+                          <select className={sel}>
                             <option value="">Select</option>
                           </select>
                         </td>
-                        <td className="px-2 py-1">
+                        <td className="px-1 py-0.5">
                           <Input type="text" placeholder="$0.00" />
                         </td>
-                        <td className="px-2 py-1">
+                        <td className="px-1 py-0.5">
                           <Input type="text" placeholder="$0.00" />
                         </td>
-                        <td className="px-2 py-1">
+                        <td className="px-1 py-0.5">
                           <Input type="text" placeholder="$0.00" />
                         </td>
-                        <td className="px-2 py-1 text-right">
+                        <td className="px-1 py-0.5 text-right">
                           <button onClick={() => removeAccessorial(accessorial.id)} className="text-red-600 hover:text-red-700">
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-3 h-3" />
                           </button>
                         </td>
                       </tr>
                     ))
                   )}
-                  <tr className="bg-gray-50 font-semibold text-xs">
-                    <td className="px-2 py-1.5">Total</td>
-                    <td className="px-2 py-1.5"></td>
-                    <td className="px-2 py-1.5">${totals.customerTotal.toFixed(2)}</td>
-                    <td className="px-2 py-1.5">${totals.vendorTotal.toFixed(2)}</td>
-                    <td className="px-2 py-1.5">${totals.marginTotal.toFixed(2)}</td>
-                    <td className="px-2 py-1.5"></td>
+                  <tr className="bg-gray-50 font-semibold text-[11px]">
+                    <td className="px-2 py-1">Total</td>
+                    <td className="px-2 py-1"></td>
+                    <td className="px-2 py-1">${totals.customerTotal.toFixed(2)}</td>
+                    <td className="px-2 py-1">${totals.vendorTotal.toFixed(2)}</td>
+                    <td className="px-2 py-1">${totals.marginTotal.toFixed(2)}</td>
+                    <td className="px-2 py-1"></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 pt-2 border-t border-gray-200">
-            <div className="bg-gray-50 rounded px-3 py-2">
-              <p className="text-xs text-gray-600">Total Price</p>
-              <p className="text-lg font-bold text-gray-900">$0.00</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5 pt-1.5 border-t border-gray-200">
+            <div className="bg-gray-50 rounded px-2 py-1.5">
+              <p className="text-[10px] text-gray-600">Total Price</p>
+              <p className="text-sm font-bold text-gray-900">$0.00</p>
             </div>
-            <div className="bg-gray-50 rounded px-3 py-2">
-              <p className="text-xs text-gray-600">Gross Profit</p>
-              <p className="text-lg font-bold text-gray-900">$0.00</p>
+            <div className="bg-gray-50 rounded px-2 py-1.5">
+              <p className="text-[10px] text-gray-600">Gross Profit</p>
+              <p className="text-sm font-bold text-gray-900">$0.00</p>
             </div>
-            <div className="bg-gray-50 rounded px-3 py-2">
-              <p className="text-xs text-gray-600">Net Profit</p>
-              <p className="text-lg font-bold text-gray-900">$0.00</p>
+            <div className="bg-gray-50 rounded px-2 py-1.5">
+              <p className="text-[10px] text-gray-600">Net Profit</p>
+              <p className="text-sm font-bold text-gray-900">$0.00</p>
             </div>
-            <div className="bg-gray-50 rounded px-3 py-2">
-              <p className="text-xs text-gray-600">Net Profit Margin</p>
-              <p className="text-lg font-bold text-gray-900">0.00%</p>
+            <div className="bg-gray-50 rounded px-2 py-1.5">
+              <p className="text-[10px] text-gray-600">Net Profit Margin</p>
+              <p className="text-sm font-bold text-gray-900">0.00%</p>
             </div>
           </div>
         </div>
 
-        <div className="flex justify-end gap-2 pb-2">
+        <div className="flex justify-end gap-2 pb-1">
           <Button variant="outline" onClick={() => navigate('/dashboard/quotes')}>
             Cancel
           </Button>

@@ -180,35 +180,32 @@ export default function AddCarrier() {
     }
   };
 
-  const sel = 'w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent';
-  const lbl = 'block text-xs font-medium text-gray-700 mb-0.5';
+  const sel = 'w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent';
+  const lbl = 'block text-[11px] font-medium text-gray-700 mb-0';
   const req = <span className="text-red-500">*</span>;
-  const sectionTitle = 'text-sm font-semibold text-gray-900 mb-2';
-  const card = 'bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3';
-  const placeholderCard = 'bg-gray-50 border border-gray-200 rounded px-4 py-3 text-xs text-gray-500';
+  const card = 'bg-white rounded-lg shadow-sm border border-gray-200 px-3 py-2';
+  const placeholderCard = 'bg-gray-50 border border-gray-200 rounded px-3 py-2 text-[11px] text-gray-500';
+  const sectionTitle = 'text-xs font-semibold text-gray-900 mb-1';
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => navigate('/dashboard/carriers')}
-            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             Back
           </button>
-          <div className="h-5 w-px bg-gray-300" />
-          <h1 className="text-xl font-bold text-gray-900">Add New Carrier</h1>
+          <div className="h-4 w-px bg-gray-300" />
+          <h1 className="text-base font-bold text-gray-900">Add New Carrier</h1>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => navigate('/dashboard/carriers')}>
-            Cancel
-          </Button>
+          <Button variant="outline" onClick={() => navigate('/dashboard/carriers')}>Cancel</Button>
           <Button
             onClick={handleSave}
             disabled={saving}
-            icon={saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           >
             {saving ? 'Saving...' : 'Save Carrier'}
           </Button>
@@ -216,17 +213,17 @@ export default function AddCarrier() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-2 flex items-center gap-2 text-sm">
-          <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+        <div className="bg-red-50 border border-red-200 rounded px-3 py-1.5 flex items-center gap-2 text-xs">
+          <AlertCircle className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
           <span className="text-red-800">{error}</span>
         </div>
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {/* Company Overview */}
         <div className={card}>
           <h2 className={sectionTitle}>Company Overview</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-1">
             <div>
               <label className={lbl}>Company Name {req}</label>
               <Input type="text" placeholder="Company Name" value={form.company_name} onChange={set('company_name')} />
@@ -247,9 +244,7 @@ export default function AddCarrier() {
               <label className={lbl}>State</label>
               <select className={sel} value={form.state} onChange={setSelect('state')}>
                 <option value="">Select</option>
-                {US_STATES.map((s) => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
-                ))}
+                {US_STATES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
               </select>
             </div>
             <div>
@@ -263,9 +258,7 @@ export default function AddCarrier() {
             <div>
               <label className={lbl}>Country {req}</label>
               <select className={sel} value={form.country} onChange={setSelect('country')}>
-                {COUNTRIES.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
+                {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
@@ -291,18 +284,14 @@ export default function AddCarrier() {
             <div>
               <label className={lbl}>Carrier Pay Terms {req}</label>
               <select className={sel} value={form.carrier_pay_terms} onChange={setSelect('carrier_pay_terms')}>
-                {PAY_TERMS.map((t) => (
-                  <option key={t} value={t}>{t}</option>
-                ))}
+                {PAY_TERMS.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
             <div>
               <label className={lbl}>Payment Method {req}</label>
               <select className={sel} value={form.payment_method} onChange={setSelect('payment_method')}>
                 <option value="">Select</option>
-                {PAYMENT_METHODS.map((m) => (
-                  <option key={m} value={m}>{m}</option>
-                ))}
+                {PAYMENT_METHODS.map((m) => <option key={m} value={m}>{m}</option>)}
               </select>
             </div>
             <div>
@@ -328,9 +317,7 @@ export default function AddCarrier() {
               <label className={lbl}>Internal Rating</label>
               <select className={sel} value={form.internal_rating} onChange={setSelect('internal_rating')}>
                 <option value="">Select</option>
-                {INTERNAL_RATINGS.map((r) => (
-                  <option key={r} value={r}>{r}</option>
-                ))}
+                {INTERNAL_RATINGS.map((r) => <option key={r} value={r}>{r}</option>)}
               </select>
             </div>
             <div>
@@ -344,21 +331,21 @@ export default function AddCarrier() {
             <div className="col-span-2">
               <label className={lbl}>Note</label>
               <textarea
-                rows={2}
+                rows={1}
                 placeholder="Notes"
                 value={form.notes}
                 onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
-                className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
         </div>
 
-        {/* Legal + Mailing Address + Carrier Contact side by side */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+        {/* Legal + Mailing + Carrier Contact */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-1.5">
           <div className={card}>
             <h2 className={sectionTitle}>Legal Information</h2>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
               <div>
                 <label className={lbl}>DOT Number {req}</label>
                 <Input type="text" placeholder="DOT Number" value={form.dot_number} onChange={set('dot_number')} />
@@ -375,13 +362,13 @@ export default function AddCarrier() {
                 <label className={lbl}>EIN #</label>
                 <Input type="text" placeholder="EIN #" value={form.ein_number} onChange={set('ein_number')} />
               </div>
-              <div className="flex items-center gap-4 col-span-2 pt-1">
-                <label className="flex items-center gap-1.5 text-xs text-gray-700">
-                  <input type="checkbox" checked={form.need_1099} onChange={setBool('need_1099')} className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5" />
+              <div className="flex items-center gap-3 col-span-2 pt-0.5">
+                <label className="flex items-center gap-1 text-[11px] text-gray-700">
+                  <input type="checkbox" checked={form.need_1099} onChange={setBool('need_1099')} className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3" />
                   Need 1099
                 </label>
-                <label className="flex items-center gap-1.5 text-xs text-gray-700">
-                  <input type="checkbox" checked={form.no_load} onChange={setBool('no_load')} className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5" />
+                <label className="flex items-center gap-1 text-[11px] text-gray-700">
+                  <input type="checkbox" checked={form.no_load} onChange={setBool('no_load')} className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3" />
                   No Load
                 </label>
               </div>
@@ -390,7 +377,7 @@ export default function AddCarrier() {
 
           <div className={card}>
             <h2 className={sectionTitle}>Mailing Address Details</h2>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
               <div>
                 <label className={lbl}>Address 1</label>
                 <Input type="text" placeholder="Address 1" value={form.mailing_address_1} onChange={set('mailing_address_1')} />
@@ -411,18 +398,14 @@ export default function AddCarrier() {
                 <label className={lbl}>State</label>
                 <select className={sel} value={form.mailing_state} onChange={setSelect('mailing_state')}>
                   <option value="">Select</option>
-                  {US_STATES.map((s) => (
-                    <option key={s.value} value={s.value}>{s.label}</option>
-                  ))}
+                  {US_STATES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                 </select>
               </div>
               <div>
                 <label className={lbl}>Country</label>
                 <select className={sel} value={form.mailing_country} onChange={setSelect('mailing_country')}>
                   <option value="">Select</option>
-                  {COUNTRIES.map((c) => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
+                  {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
             </div>
@@ -430,7 +413,7 @@ export default function AddCarrier() {
 
           <div className={card}>
             <h2 className={sectionTitle}>Carrier Contact</h2>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
               <div>
                 <label className={lbl}>1st Contact</label>
                 <Input type="text" placeholder="1st Contact" value={form.contact_1_name} onChange={set('contact_1_name')} />
@@ -452,16 +435,16 @@ export default function AddCarrier() {
         </div>
 
         {/* Remittance + Factoring */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-2">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-1.5">
           <div className={card}>
             <h2 className={sectionTitle}>Remittance Information</h2>
-            <div className="mb-2">
-              <label className="flex items-center gap-1.5 text-xs text-gray-700">
-                <input type="checkbox" checked={form.remittance_same_as_physical} onChange={setBool('remittance_same_as_physical')} className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5" />
+            <div className="mb-1">
+              <label className="flex items-center gap-1 text-[11px] text-gray-700">
+                <input type="checkbox" checked={form.remittance_same_as_physical} onChange={setBool('remittance_same_as_physical')} className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-3 w-3" />
                 Same as physical address
               </label>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-1">
               <div>
                 <label className={lbl}>Email</label>
                 <Input type="email" placeholder="Email" value={form.remittance_email} onChange={set('remittance_email')} disabled={form.remittance_same_as_physical} />
@@ -482,9 +465,7 @@ export default function AddCarrier() {
                 <label className={lbl}>State</label>
                 <select className={sel} value={form.remittance_state} onChange={setSelect('remittance_state')} disabled={form.remittance_same_as_physical}>
                   <option value="">Select</option>
-                  {US_STATES.map((s) => (
-                    <option key={s.value} value={s.value}>{s.label}</option>
-                  ))}
+                  {US_STATES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                 </select>
               </div>
               <div>
@@ -498,9 +479,7 @@ export default function AddCarrier() {
               <div>
                 <label className={lbl}>Country</label>
                 <select className={sel} value={form.remittance_country} onChange={setSelect('remittance_country')} disabled={form.remittance_same_as_physical}>
-                  {COUNTRIES.map((c) => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
+                  {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
             </div>
@@ -516,17 +495,15 @@ export default function AddCarrier() {
         </div>
 
         {/* Operation Details + Bank Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5">
           <div className={card}>
             <h2 className={sectionTitle}>Operation Details</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-1">
               <div>
                 <label className={lbl}>Carrier Type {req}</label>
                 <select className={sel} value={form.carrier_type} onChange={setSelect('carrier_type')}>
                   <option value="">Select</option>
-                  {CARRIER_TYPES.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
+                  {CARRIER_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
               <div>
@@ -566,7 +543,7 @@ export default function AddCarrier() {
 
           <div className={card}>
             <h2 className={sectionTitle}>Bank Details</h2>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
               <div>
                 <label className={lbl}>Routing Number</label>
                 <Input type="text" placeholder="Routing Number" value={form.bank_routing_number} onChange={set('bank_routing_number')} />
@@ -603,69 +580,37 @@ export default function AddCarrier() {
           </div>
         </div>
 
-        {/* Placeholder sections for post-save features */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          <div className={placeholderCard}>
-            <div className="flex items-center gap-1.5 mb-1">
-              <Lock className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs font-semibold text-gray-700">TIN Details</span>
+        {/* Placeholder sections */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1.5">
+          {[
+            { title: 'TIN Details', text: 'You need to save the carrier before you can add any TIN information for this page.' },
+            { title: 'Insurance Details', text: 'You need to save the carrier before you can add any insurance information for this page.' },
+            { title: 'Carrier Files', text: 'You need to save the carrier before you can add any files for this page.' },
+            { title: 'Internal Notes', text: 'You need to save the carrier before you can add any internal notes for this page.' },
+            { title: 'Drivers Information', text: 'You need to save the carrier before you can add any driver information for this page.' },
+            { title: 'Dispatcher Information', text: 'You need to save the carrier before you can add any dispatcher information for this page.' },
+          ].map((section) => (
+            <div key={section.title} className={placeholderCard}>
+              <div className="flex items-center gap-1 mb-0.5">
+                <Lock className="w-3 h-3 text-gray-400" />
+                <span className="text-[11px] font-semibold text-gray-700">{section.title}</span>
+              </div>
+              <p>{section.text}</p>
             </div>
-            <p>You need to save the carrier before you can add any TIN information for this page.</p>
-          </div>
-          <div className={placeholderCard}>
-            <div className="flex items-center gap-1.5 mb-1">
-              <Lock className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs font-semibold text-gray-700">Insurance Details</span>
-            </div>
-            <p>You need to save the carrier before you can add any insurance information for this page.</p>
-          </div>
-          <div className={placeholderCard}>
-            <div className="flex items-center gap-1.5 mb-1">
-              <Lock className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs font-semibold text-gray-700">Carrier Files</span>
-            </div>
-            <p>You need to save the carrier before you can add any files for this page.</p>
-          </div>
-          <div className={placeholderCard}>
-            <div className="flex items-center gap-1.5 mb-1">
-              <Lock className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs font-semibold text-gray-700">Internal Notes</span>
-            </div>
-            <p>You need to save the carrier before you can add any internal notes for this page.</p>
-          </div>
-          <div className={placeholderCard}>
-            <div className="flex items-center gap-1.5 mb-1">
-              <Lock className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs font-semibold text-gray-700">Drivers Information</span>
-            </div>
-            <p>You need to save the carrier before you can add any driver information for this page.</p>
-          </div>
-          <div className={placeholderCard}>
-            <div className="flex items-center gap-1.5 mb-1">
-              <Lock className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs font-semibold text-gray-700">Dispatcher Information</span>
-            </div>
-            <p>You need to save the carrier before you can add any dispatcher information for this page.</p>
-          </div>
+          ))}
         </div>
 
         <div className={placeholderCard}>
-          <div className="flex items-center gap-1.5 mb-1">
-            <Lock className="w-3.5 h-3.5 text-gray-400" />
-            <span className="text-xs font-semibold text-gray-700">Order Information</span>
+          <div className="flex items-center gap-1 mb-0.5">
+            <Lock className="w-3 h-3 text-gray-400" />
+            <span className="text-[11px] font-semibold text-gray-700">Order Information</span>
           </div>
           <p>You need to save the carrier before to see the order information for this page.</p>
         </div>
 
-        <div className="flex justify-end gap-2 pb-2">
-          <Button variant="outline" onClick={() => navigate('/dashboard/carriers')}>
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSave}
-            disabled={saving}
-            icon={saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          >
+        <div className="flex justify-end gap-2 pb-1">
+          <Button variant="outline" onClick={() => navigate('/dashboard/carriers')}>Cancel</Button>
+          <Button onClick={handleSave} disabled={saving}>
             {saving ? 'Saving...' : 'Save Carrier'}
           </Button>
         </div>
