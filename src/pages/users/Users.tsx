@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Profile } from '../../types/database';
-import { UserPlus, AlertCircle, CheckCircle, Loader, X } from 'lucide-react';
+import { UserPlus, AlertCircle, CheckCircle, Loader, X, Pencil, Eye, EyeOff } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Modal from '../../components/ui/Modal';
@@ -12,12 +12,20 @@ export default function Users() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingUser, setEditingUser] = useState<Profile | null>(null);
 
   const [newUserEmail, setNewUserEmail] = useState('');
   const [newUserPassword, setNewUserPassword] = useState('');
   const [newUserFullName, setNewUserFullName] = useState('');
   const [newUserPhone, setNewUserPhone] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  const [editFullName, setEditFullName] = useState('');
+  const [editEmail, setEditEmail] = useState('');
+  const [editPassword, setEditPassword] = useState('');
+  const [showEditPassword, setShowEditPassword] = useState(false);
+  const [editSubmitting, setEditSubmitting] = useState(false);
 
   useEffect(() => {
     loadUsers();
@@ -86,6 +94,81 @@ export default function Users() {
     }
   };
 
+  const openEditModal = (user: Profile) => {
+    setEditingUser(user);
+    setEditFullName(user.full_name || '');
+    setEditEmail(user.email);
+    setEditPassword('');
+    setShowEditPassword(false);
+    setShowEditModal(true);
+  };
+
+  const handleEditUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingUser) return;
+
+    setError(null);
+    setSuccess(null);
+    setEditSubmitting(true);
+
+    try {
+      const payload: Record<string, string> = { user_id: editingUser.id };
+
+      const nameChanged = editFullName !== (editingUser.full_name || '');
+      const emailChanged = editEmail !== editingUser.email;
+      const passwordChanged = editPassword.length > 0;
+
+      if (!nameChanged && !emailChanged && !passwordChanged) {
+        setShowEditModal(false);
+        return;
+      }
+
+      if (nameChanged) payload.full_name = editFullName;
+      if (emailChanged) payload.email = editEmail;
+      if (passwordChanged) {
+        if (editPassword.length < 6) {
+          setError('Password must be at least 6 characters.');
+          setEditSubmitting(false);
+          return;
+        }
+        payload.password = editPassword;
+      }
+
+      const session = (await supabase.auth.getSession()).data.session;
+      if (!session) throw new Error('Not authenticated');
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-update-user`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+            'Apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify(payload),
+        },
+      );
+
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || 'Failed to update user');
+
+      const parts: string[] = [];
+      if (nameChanged) parts.push('name');
+      if (emailChanged) parts.push('email');
+      if (passwordChanged) parts.push('password');
+
+      setSuccess(`Updated ${parts.join(', ')} for ${editFullName || editEmail}`);
+      setShowEditModal(false);
+      await loadUsers();
+    } catch (err) {
+      console.error('Error updating user:', err);
+      setError(err instanceof Error ? err.message : 'Failed to update user');
+    } finally {
+      setEditSubmitting(false);
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
@@ -106,10 +189,7 @@ export default function Users() {
           <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
           <p className="text-gray-600 mt-1">Manage system users and permissions</p>
         </div>
-        <Button
-          onClick={() => setShowAddModal(true)}
-          icon={<UserPlus className="w-4 h-4" />}
-        >
+        <Button onClick={() => setShowAddModal(true)}>
           Add User
         </Button>
       </div>
@@ -171,6 +251,9 @@ export default function Users() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Created
                   </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -204,6 +287,15 @@ export default function Users() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(user.created_at).toLocaleDateString()}
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <button
+                        onClick={() => openEditModal(user)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                        Edit
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -212,6 +304,7 @@ export default function Users() {
         )}
       </div>
 
+      {/* Add User Modal */}
       <Modal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
@@ -282,10 +375,83 @@ export default function Users() {
             <Button
               type="submit"
               disabled={submitting}
-              className="flex-1"
-              icon={submitting ? <Loader className="w-4 h-4 animate-spin" /> : <UserPlus className="w-4 h-4" />}
             >
               {submitting ? 'Creating...' : 'Create User'}
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Edit User Modal */}
+      <Modal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        title="Edit User"
+      >
+        <form onSubmit={handleEditUser} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Full Name
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter full name"
+              value={editFullName}
+              onChange={(val) => setEditFullName(val)}
+              disabled={editSubmitting}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
+            <Input
+              type="email"
+              placeholder="Enter email address"
+              value={editEmail}
+              onChange={(val) => setEditEmail(val)}
+              disabled={editSubmitting}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              New Password
+            </label>
+            <p className="text-xs text-gray-500 mb-1">Leave blank to keep the current password.</p>
+            <div className="relative">
+              <Input
+                type={showEditPassword ? 'text' : 'password'}
+                placeholder="Enter new password (min. 6 characters)"
+                value={editPassword}
+                onChange={(val) => setEditPassword(val)}
+                disabled={editSubmitting}
+              />
+              <button
+                type="button"
+                onClick={() => setShowEditPassword(!showEditPassword)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showEditPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button
+              type="button"
+              onClick={() => setShowEditModal(false)}
+              disabled={editSubmitting}
+              className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={editSubmitting}
+            >
+              {editSubmitting ? 'Saving...' : 'Save Changes'}
             </Button>
           </div>
         </form>
