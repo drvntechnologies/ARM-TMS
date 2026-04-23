@@ -65,6 +65,10 @@ export default function DashboardLayout() {
         identity={{
           href: '/dashboard',
           title: 'Auto Relocation Management',
+          logo: {
+            src: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAxNkM1LjM0IDE2IDQgMTQuNjYgNCAxM0M0IDExLjM0IDUuMzQgMTAgNyAxMEM4LjY2IDEwIDEwIDExLjM0IDEwIDEzQzEwIDE0LjY2IDguNjYgMTYgNyAxNlpNMTcgMTZDMTUuMzQgMTYgMTQgMTQuNjYgMTQgMTNDMTQgMTEuMzQgMTUuMzQgMTAgMTcgMTBDMTguNjYgMTAgMjAgMTEuMzQgMjAgMTNDMjAgMTQuNjYgMTguNjYgMTYgMTcgMTZaTTE4LjkyIDZDMTguNzIgNS40MiAxOC4xNiA1IDE3LjUgNUg5QzguNCD1IDggNS40IDggNlYxMkgyMFY4TDE4LjkyIDZaTTYgMTlWMTdINFYxMEMyIDEwIDIgMTAgMiAxMkwxLjk5IDE1SDRWMTlINlpNMjAgMTdWMTlIMThWMTVIMjBWMTdaIiBmaWxsPSIjMDA3QUNDII8vc3ZnPg==',
+            alt: 'Auto Relocation'
+          }
         }}
         utilities={[
           {
