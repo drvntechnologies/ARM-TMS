@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import { supabase } from '../../lib/supabase';
 
 interface Vehicle {
   id: string;
@@ -25,8 +26,83 @@ interface Accessorial {
   margin: string;
 }
 
+interface CustomerOption {
+  id: string;
+  company_name: string | null;
+  contact_name: string;
+  phone: string | null;
+  email: string;
+}
+
+interface ContactOption {
+  id: string;
+  first_name: string;
+  last_name: string;
+  phone: string | null;
+  email: string | null;
+}
+
 export default function NewQuote() {
   const navigate = useNavigate();
+
+  // Customer / rep dropdowns
+  const [customers, setCustomers] = useState<CustomerOption[]>([]);
+  const [selectedCustomerId, setSelectedCustomerId] = useState('');
+  const [contacts, setContacts] = useState<ContactOption[]>([]);
+  const [selectedContactId, setSelectedContactId] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+
+  useEffect(() => {
+    supabase
+      .from('customers')
+      .select('id, company_name, contact_name, phone, email')
+      .eq('status', 'active')
+      .order('company_name', { ascending: true })
+      .then(({ data }) => setCustomers(data || []));
+  }, []);
+
+  const handleCompanyChange = async (customerId: string) => {
+    setSelectedCustomerId(customerId);
+    setSelectedContactId('');
+    setContacts([]);
+
+    if (!customerId) {
+      setCustomerPhone('');
+      setCustomerEmail('');
+      return;
+    }
+
+    const customer = customers.find((c) => c.id === customerId);
+    if (customer) {
+      setCustomerPhone(customer.phone ?? '');
+      setCustomerEmail(customer.email ?? '');
+    }
+
+    const { data } = await supabase
+      .from('customer_contacts')
+      .select('id, first_name, last_name, phone, email')
+      .eq('customer_id', customerId)
+      .order('first_name', { ascending: true });
+    setContacts(data || []);
+  };
+
+  const handleRepChange = (contactId: string) => {
+    setSelectedContactId(contactId);
+    if (!contactId) {
+      // revert to customer-level values
+      const customer = customers.find((c) => c.id === selectedCustomerId);
+      setCustomerPhone(customer?.phone ?? '');
+      setCustomerEmail(customer?.email ?? '');
+      return;
+    }
+    const contact = contacts.find((c) => c.id === contactId);
+    if (contact) {
+      if (contact.phone) setCustomerPhone(contact.phone);
+      if (contact.email) setCustomerEmail(contact.email);
+    }
+  };
+
   const [vehicles, setVehicles] = useState<Vehicle[]>([
     {
       id: '1',
@@ -126,23 +202,52 @@ export default function NewQuote() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-1">
             <div>
               <label className={lbl}>Company {req}</label>
-              <select className={sel}>
+              <select
+                className={sel}
+                value={selectedCustomerId}
+                onChange={(e) => handleCompanyChange(e.target.value)}
+              >
                 <option value="">Select Company</option>
+                {customers.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.company_name || c.contact_name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
               <label className={lbl}>Company Rep {req}</label>
-              <select className={sel}>
+              <select
+                className={sel}
+                value={selectedContactId}
+                onChange={(e) => handleRepChange(e.target.value)}
+                disabled={!selectedCustomerId}
+              >
                 <option value="">Select Company Rep</option>
+                {contacts.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.first_name} {c.last_name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
               <label className={lbl}>Phone {req}</label>
-              <Input type="tel" placeholder="(XXX) XXX-XXXX" />
+              <Input
+                type="tel"
+                placeholder="(XXX) XXX-XXXX"
+                value={customerPhone}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomerPhone(e.target.value)}
+              />
             </div>
             <div>
               <label className={lbl}>Email {req}</label>
-              <Input type="email" placeholder="Enter Email" />
+              <Input
+                type="email"
+                placeholder="Enter Email"
+                value={customerEmail}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomerEmail(e.target.value)}
+              />
             </div>
             <div>
               <label className={lbl}>Referral By</label>
