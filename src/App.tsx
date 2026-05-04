@@ -13,6 +13,7 @@ import CustomerQuotes from './pages/quotes/CustomerQuotes';
 import Orders from './pages/orders/Orders';
 import CreateOrder from './pages/orders/CreateOrder';
 import Customers from './pages/customers/Customers';
+import EditCustomer from './pages/customers/EditCustomer';
 import Carriers from './pages/carriers/Carriers';
 import AddCarrier from './pages/carriers/AddCarrier';
 import MLBTransport from './pages/mlb-transport/MLBTransport';
@@ -57,6 +58,7 @@ function App() {
             <Route path="orders" element={<Orders />} />
             <Route path="orders/new" element={<CreateOrder />} />
             <Route path="customers" element={<Customers />} />
+            <Route path="customers/:id" element={<EditCustomer />} />
             <Route path="carriers" element={<Carriers />} />
             <Route path="carriers/new" element={<AddCarrier />} />
             <Route path="mlb-transport" element={<MLBTransport />} />
