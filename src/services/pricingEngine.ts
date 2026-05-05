@@ -87,7 +87,7 @@ export async function calculatePrice(request: PricingRequest): Promise<PricingBr
       state: request.destination_state,
     },
     vehicles: request.vehicles,
-    trailer_type: 'open',
+    trailer_type: request.transport_type,
   });
 
   let transportRate = carrierResponse.carrier_price;
