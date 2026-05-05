@@ -26,10 +26,26 @@ interface SuperDispatchResponse {
   confidence: number;
 }
 
+import { supabase } from '../lib/supabase';
+
 const SUPERDISPATCH_API_URL = 'https://api.superdispatch.com/v1/pricing';
 
+async function getSetting(key: string, envFallback: string): Promise<string | null> {
+  try {
+    const { data } = await supabase
+      .from('system_settings')
+      .select('setting_value')
+      .eq('setting_key', key)
+      .maybeSingle();
+    if (data?.setting_value) return data.setting_value;
+  } catch {
+    // fall through
+  }
+  return import.meta.env[envFallback] || null;
+}
+
 export async function getCarrierRate(request: SuperDispatchRequest): Promise<SuperDispatchResponse> {
-  const apiKey = import.meta.env.VITE_SUPERDISPATCH_API_KEY;
+  const apiKey = await getSetting('superdispatch_api_key', 'VITE_SUPERDISPATCH_API_KEY');
 
   if (!apiKey) {
     console.warn('SuperDispatch API key not configured, using mock data');
@@ -100,7 +116,7 @@ async function getMockCarrierRate(request: SuperDispatchRequest): Promise<SuperD
 }
 
 async function calculateDistanceWithGoogle(originZip: string, destinationZip: string): Promise<number> {
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const apiKey = await getSetting('google_maps_api_key', 'VITE_GOOGLE_MAPS_API_KEY');
 
   if (!apiKey) {
     throw new Error('Google Maps API key not configured');
