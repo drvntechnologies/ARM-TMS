@@ -30,6 +30,7 @@ interface IntegrationKey {
   saving: boolean;
   testing: boolean;
   status: 'unknown' | 'ok' | 'error';
+  testMessage: string;
 }
 
 const DEFAULT_INTEGRATION: IntegrationKey = {
@@ -39,6 +40,7 @@ const DEFAULT_INTEGRATION: IntegrationKey = {
   saving: false,
   testing: false,
   status: 'unknown',
+  testMessage: '',
 };
 
 export default function APIKeys() {
@@ -189,9 +191,14 @@ export default function APIKeys() {
         }
       );
       const result = await response.json();
-      setSuperDispatch(prev => ({ ...prev, testing: false, status: result.success ? 'ok' : 'error' }));
-    } catch {
-      setSuperDispatch(prev => ({ ...prev, testing: false, status: 'error' }));
+      setSuperDispatch(prev => ({
+        ...prev,
+        testing: false,
+        status: result.success ? 'ok' : 'error',
+        testMessage: result.message || '',
+      }));
+    } catch (err) {
+      setSuperDispatch(prev => ({ ...prev, testing: false, status: 'error', testMessage: String(err) }));
     }
   };
 
@@ -373,6 +380,11 @@ export default function APIKeys() {
               </Button>
             )}
           </div>
+          {state.testMessage && (
+            <p className={`mt-2 text-xs ${state.status === 'error' ? 'text-red-600' : 'text-green-700'}`}>
+              {state.testMessage}
+            </p>
+          )}
         </div>
       </div>
     );

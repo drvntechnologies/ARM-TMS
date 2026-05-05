@@ -36,28 +36,40 @@ Deno.serve(async (req: Request) => {
     }
 
     if (integration === "superdispatch") {
-      const response = await fetch("https://api.superdispatch.com/v1/pricing", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          origin: { zip: "10001", state: "NY" },
-          destination: { zip: "90001", state: "CA" },
-          vehicles: [{ year: 2020, make: "Toyota", model: "Camry", type: "sedan", is_operable: true }],
-          trailer_type: "open",
-        }),
-      });
+      const response = await fetch(
+        "https://pricing-insights.superdispatch.com/api/v1/recommended-price",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            origin_zip: "10001",
+            destination_zip: "90001",
+            vehicle: { year: 2020, make: "Toyota", model: "Camry", type: "sedan", is_operable: true },
+            trailer_type: "open",
+          }),
+        }
+      );
 
-      // 401/403 = bad key, 200/400/422 = key is valid (bad request body is still authenticated)
+      const responseText = await response.text();
+      let responseBody: unknown = responseText;
+      try { responseBody = JSON.parse(responseText); } catch { /* keep as text */ }
+
+      // 401/403 = bad credentials; everything else means the key authenticated
       const success = response.status !== 401 && response.status !== 403;
+
+      console.log(`SuperDispatch test: status=${response.status} body=${responseText}`);
 
       return new Response(
         JSON.stringify({
           success,
           status: response.status,
-          message: success ? "Connection successful" : "Authentication failed — check your API key",
+          body: responseBody,
+          message: success
+            ? "Connection successful"
+            : `Authentication failed (${response.status}) — check your API key`,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
