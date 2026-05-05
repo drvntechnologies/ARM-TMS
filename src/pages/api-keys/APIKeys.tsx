@@ -172,25 +172,24 @@ export default function APIKeys() {
   };
 
   const testSuperDispatch = async () => {
-    const keyToTest = superDispatch.saved;
-    if (!keyToTest) return;
+    if (!superDispatch.saved) return;
 
     setSuperDispatch(prev => ({ ...prev, testing: true, status: 'unknown' }));
     try {
-      const response = await fetch('https://api.superdispatch.com/v1/pricing', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${keyToTest}`,
-        },
-        body: JSON.stringify({
-          origin: { zip: '10001', state: 'NY' },
-          destination: { zip: '90001', state: 'CA' },
-          vehicles: [{ year: 2020, make: 'Toyota', model: 'Camry', type: 'sedan', is_operable: true }],
-          trailer_type: 'open',
-        }),
-      });
-      setSuperDispatch(prev => ({ ...prev, testing: false, status: response.ok ? 'ok' : 'error' }));
+      const { data: { session } } = await supabase.auth.getSession();
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/test-integration`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token}`,
+          },
+          body: JSON.stringify({ integration: 'superdispatch' }),
+        }
+      );
+      const result = await response.json();
+      setSuperDispatch(prev => ({ ...prev, testing: false, status: result.success ? 'ok' : 'error' }));
     } catch {
       setSuperDispatch(prev => ({ ...prev, testing: false, status: 'error' }));
     }
