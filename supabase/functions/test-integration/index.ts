@@ -42,12 +42,12 @@ Deno.serve(async (req: Request) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`,
+            "Authorization": `Token ${apiKey}`,
           },
           body: JSON.stringify({
-            origin_zip: "10001",
-            destination_zip: "90001",
-            vehicle: { year: 2020, make: "Toyota", model: "Camry", type: "sedan", is_operable: true },
+            origin: { zip: "10001", state: "NY" },
+            destination: { zip: "90001", state: "CA" },
+            vehicles: [{ year: 2020, make: "Toyota", model: "Camry", type: "sedan", is_operable: true }],
             trailer_type: "open",
           }),
         }
