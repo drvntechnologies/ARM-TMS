@@ -62,6 +62,10 @@ Deno.serve(async (req: Request) => {
 
       console.log(`SuperDispatch test: status=${response.status} body=${responseText}`);
 
+      const detail = typeof responseBody === "object"
+        ? JSON.stringify(responseBody)
+        : String(responseBody);
+
       return new Response(
         JSON.stringify({
           success,
@@ -69,7 +73,7 @@ Deno.serve(async (req: Request) => {
           body: responseBody,
           message: success
             ? "Connection successful"
-            : `Authentication failed (${response.status}) — check your API key`,
+            : `Failed (HTTP ${response.status}): ${detail}`,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
