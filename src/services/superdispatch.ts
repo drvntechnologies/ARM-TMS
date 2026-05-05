@@ -28,7 +28,7 @@ interface SuperDispatchResponse {
 
 import { supabase } from '../lib/supabase';
 
-const SUPERDISPATCH_API_URL = 'https://api.superdispatch.com/v1/pricing';
+const SUPERDISPATCH_API_URL = 'https://pricing-insights.superdispatch.com/api/v1/recommended-price';
 
 async function getSetting(key: string, envFallback: string): Promise<string | null> {
   try {
@@ -57,7 +57,7 @@ export async function getCarrierRate(request: SuperDispatchRequest): Promise<Sup
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Token ${apiKey}`,
       },
       body: JSON.stringify(request),
     });
