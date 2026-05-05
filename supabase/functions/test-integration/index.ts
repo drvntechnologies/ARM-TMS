@@ -30,12 +30,13 @@ Deno.serve(async (req: Request) => {
 
     if (!apiKey) {
       return new Response(
-        JSON.stringify({ success: false, message: "API key not configured" }),
+        JSON.stringify({ success: false, message: `API key not configured (looked up key: ${integration}_api_key)` }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
     if (integration === "superdispatch") {
+      console.log(`API key found, length=${apiKey.length}, first4=${apiKey.substring(0, 4)}, authHeader=Token ${apiKey.substring(0, 4)}...`);
       const response = await fetch(
         "https://pricing-insights.superdispatch.com/api/v1/recommended-price",
         {
@@ -43,6 +44,7 @@ Deno.serve(async (req: Request) => {
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Token ${apiKey}`,
+            "X-Api-Key": apiKey,
           },
           body: JSON.stringify({
             origin: { zip: "10001", state: "NY" },
